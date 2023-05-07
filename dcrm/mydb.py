@@ -6,7 +6,7 @@ import mysql.connector
 dataBase = mysql.connector.connect(
     host = 'localhost',
     user = 'root',
-    passwd = '+23@F-Oe+h5'
+    passwd = 'test1234'
 )
 
 cursorObject = dataBase.cursor()
