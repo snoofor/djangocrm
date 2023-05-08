@@ -19,8 +19,19 @@ from . import views
 
 app_name = 'website' # for reverse jinja syntax
 
+    # in order to use django form use below sign up - then signup.html use {{form}} in urlpatterns
+
+    # {% for field in form %}
+    # <div class="mb-3"
+    #    {{field.label_tag}}
+    #    {{field}}
+    # </div>
+    # {% endfor %}
+
+    # path('signup', views.SignUpView.as_view(), name='signup'), # CBV change class to view by using as_view()
+
 urlpatterns = [
     path('', views.home, name='home'),
-    #path('login/', views.login_user, name='login'),
-    #path('logout/', views.logout_user, name='logout'),
+    # in order to create your own form use below
+    path("signup/", views.signup_user, name="signup"),
 ]

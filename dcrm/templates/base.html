@@ -17,15 +17,25 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
+
+              {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'logout' %}?next=/">Logout</a>
+                <!-- redirection after logout ensured with next statements as ?next=/ - / means home page -->
               </li>
+
+              {% else %}
+
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'website:signup' %}?next=login">SignUp</a>
+                <!-- redirection after logout ensured with next statements as ?next=/ - / means home page -->
               </li>
+
               <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
               </li>
+
+              {% endif %}
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -37,23 +47,9 @@
 
     <br>
 
-  <div class="container">
-    
-      {% if messages %}
-        {% for message in messages %}
-        
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          {{message}}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-        {% endfor %}
-      {% endif %}
-
-    {% block content %}
-        
-    {% endblock %}
-  </div>
-
 </body>
 </html>
+
+{% block content %}
+
+{% endblock %}
