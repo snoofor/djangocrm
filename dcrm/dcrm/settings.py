@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+with open('secrets.txt', 'r', encoding='utf8') as s:
+    text_read = s.readlines()
+
+db_uname = text_read[0].split()[2]
+db_psswd = text_read[1].split()[2]
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -80,8 +86,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'CRM',
-        'USER': 'root',
-        'PASSWORD': 'test1234',
+        'USER': db_uname,
+        'PASSWORD': db_psswd,
         'HOST': 'localhost',
         'PORT': '3306',
     }
