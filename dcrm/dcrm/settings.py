@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
-with open('secrets.txt', 'r', encoding='utf8') as s:
+with open(r'C:\Users\furkan\DjangoCRM\dcrm\dcrm\secrets.txt', 'r', encoding='utf8') as s:
     text_read = s.readlines()
 
 db_uname = text_read[0].split()[2]
