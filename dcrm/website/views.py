@@ -5,6 +5,10 @@ from django.contrib.auth.decorators import login_required # if not login do not 
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from django.urls import reverse, reverse_lazy
+from .forms import SignUpForm
+from django.core.validators import validate_email, EmailValidator
+from django.core.exceptions import ValidationError
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -25,4 +29,32 @@ def logout_user(request):
     return redirect("home")
 
 def signup_user(request):
-    return render(request, 'registration/signup.html', {})
+
+    if request.POST:
+        form = SignUpForm(request.POST)
+        email_validator = EmailValidator()
+        allowed_domains = ['gmail.com', 'hotmail.com']
+        if form.is_valid():
+            form.save()
+            # Authenticate email
+            email = form.cleaned_data.get('email')
+            email_domain = email.split('@')[-1]
+            if email:
+                try:
+                    email_validator(email)
+                except ValidationError:
+                    raise ValidationError('Invaild Email')
+                if email_domain not in allowed_domains:
+                    raise ValidationError(f'Email domain must be one of the followings: \
+                                          {"," .join(allowed_domains)}.')
+            # Authenticate
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username = username, password = password)
+            login(request, user)
+            messages.success(request, f'You have been succesfully Registered. Welcome {user.username}')
+            return redirect("login")
+    else:
+        form = SignUpForm()
+        # return render(request, 'registration/signup.html', {'form': form})
+    return render(request, 'registration/signup.html', {'form': form})
