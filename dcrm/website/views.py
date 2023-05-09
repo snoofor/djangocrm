@@ -26,27 +26,14 @@ def home(request):
 def logout_user(request):
     logout(request)
     messages.success(request, "You have been logout")
-    return redirect("home")
+    return redirect("login")
 
 def signup_user(request):
 
     if request.POST:
         form = SignUpForm(request.POST)
-        email_validator = EmailValidator()
-        allowed_domains = ['gmail.com', 'hotmail.com']
         if form.is_valid():
             form.save()
-            # Authenticate email
-            email = form.cleaned_data.get('email')
-            email_domain = email.split('@')[-1]
-            if email:
-                try:
-                    email_validator(email)
-                except ValidationError:
-                    raise ValidationError('Invaild Email')
-                if email_domain not in allowed_domains:
-                    raise ValidationError(f'Email domain must be one of the followings: \
-                                          {"," .join(allowed_domains)}.')
             # Authenticate
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']

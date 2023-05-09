@@ -21,8 +21,8 @@ class SignUpForm(UserCreationForm):
     last_name = forms.CharField(error_messages={"required": "Please enter your last name"}, 
                                 label='', 
                                 max_length=18, 
-                                min_length=3,
-                                widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name between 3 and 18 characters'}))
+                                min_length=2,
+                                widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name between 2 and 18 characters'}))
     
     class Meta:
         model = User
