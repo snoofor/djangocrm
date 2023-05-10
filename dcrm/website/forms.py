@@ -40,7 +40,7 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
     def clean_email(self, *args, **kwargs):
-        super(SignUpForm, self).__init__(*args, **kwargs)
+        # super(SignUpForm, self).__init__(*args, **kwargs)
         original_email = self.cleaned_data['email']
         domain = self.cleaned_data["email"].split("@")[-1]
         if domain not in VALID_DOMAINS:
