@@ -1,14 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required # if not login do not show the page
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from django.urls import reverse, reverse_lazy
 from .forms import SignUpForm
-from django.core.validators import validate_email, EmailValidator
-from django.core.exceptions import ValidationError
-from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -40,7 +37,7 @@ def signup_user(request):
             user = authenticate(username = username, password = password)
             login(request, user)
             messages.success(request, f'You have been succesfully Registered. Welcome {user.username}')
-            return redirect("login")
+            return redirect("website:home")
     else:
         form = SignUpForm()
         # return render(request, 'registration/signup.html', {'form': form})
