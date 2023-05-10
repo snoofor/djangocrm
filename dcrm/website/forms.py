@@ -5,10 +5,9 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
-#from .models import Record
+from .models import Record
 import logging
 
 logger = logging.getLogger(__name__)
@@ -40,7 +39,6 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
     def clean_email(self, *args, **kwargs):
-        # super(SignUpForm, self).__init__(*args, **kwargs)
         original_email = self.cleaned_data['email']
         domain = self.cleaned_data["email"].split("@")[-1]
         if domain not in VALID_DOMAINS:
@@ -63,5 +61,22 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Please, enter the same password as before.</small></span>'
+
+
+
+# Create Add Record Form
+class AddRecordForm(forms.ModelForm):
+	first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), label="")
+	last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), label="")
+	email = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={"placeholder":"Email", "class":"form-control"}), label="")
+	phone = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), label="")
+	address = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Address", "class":"form-control"}), label="")
+	city = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"City", "class":"form-control"}), label="")
+	state = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"State", "class":"form-control"}), label="")
+	zipcode = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={"placeholder":"Zipcode", "class":"form-control"}), label="")
+
+	class Meta:
+		model = Record
+		exclude = ("user",)
 
     
