@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.templatetags.static import static
 
-with open(r'C:\Users\furkan\DjangoCRM\dcrm\dcrm\secrets.txt', 'r', encoding='utf8') as s:
+url = r'C:\Users\furkan\DjangoCRM\dcrm\dcrm\secrets.txt'
+
+with open(url, 'r', encoding='utf8') as s:
     text_read = s.readlines()
 
 db_uname = text_read[0].split()[2]
@@ -129,6 +132,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

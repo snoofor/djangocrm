@@ -9,11 +9,16 @@ from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 from .models import Record
 import logging
+from django.contrib.staticfiles.storage import staticfiles_storage
+import os
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
-with open(r'C:\Users\furkan\DjangoCRM\dcrm\dcrm\validdomains.txt', 'r', encoding='utf8') as s:
-    text_read = s.readlines()
+text_valid_domains = staticfiles_storage.path(r'website/validdomains.txt')
+
+with open(os.path.join(settings.STATIC_ROOT, f'{text_valid_domains}'), 'r', encoding='utf8') as d:
+     text_read = d.readlines()
 
 VALID_DOMAINS = text_read[1]
 
