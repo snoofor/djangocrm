@@ -5,15 +5,25 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from django.urls import reverse, reverse_lazy
-from .forms import SignUpForm, AddRecordForm
+from .forms import SignUpForm, AddRecordForm, RecordNameFilterForm
 from .models import Record
+from .filters import RecordFilter
 
 # Create your views here.
 
+#@login_required(login_url="/accounts/login/") # login_requierd, if not login redirect to login page
+"""def home(request):
+    records = Record.objects.all()
+    return render(request, 'website/home.html', {'records':records})"""
+
 @login_required(login_url="/accounts/login/") # login_requierd, if not login redirect to login page
 def home(request):
-    records = Record.objects.all()
-    return render(request, 'website/home.html', {'records':records})
+    record_filter = RecordFilter(request.GET, queryset=Record.objects.all())
+    context = {
+        'form' : record_filter.form,
+        'records' : record_filter.qs
+    }
+    return render(request, 'website/home.html', context)
 
 # Creation of user Model class based view
 # class SignUpView(CreateView): # inherited from CreateView
@@ -89,3 +99,17 @@ def update_record(request, pk):
     else:
         messages.success(request, 'You must be logged in!')
         return redirect("website:home")
+    
+    
+# RecordNameFilterForm is at forms.py - RecordFilter is at filters.py
+
+def records_filter(request):
+    first_name = request.GET.get('first_name')
+    records = Record.objects.all()
+    if first_name:
+        records = records.filter(first_name__icontains=first_name)
+    context = {
+        'form' : RecordNameFilterForm(),
+        'records' : records
+    }
+    return render(request, 'website:home', context)

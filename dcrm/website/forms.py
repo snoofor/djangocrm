@@ -13,11 +13,11 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 import os
 from django.conf import settings
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 text_valid_domains = staticfiles_storage.path(r'website/validdomains.txt')
 
-with open(os.path.join(settings.STATIC_ROOT, f'{text_valid_domains}'), 'r', encoding='utf8') as d:
+with open(os.path.join(settings.STATIC_ROOT, f'{text_valid_domains}'), 'r', encoding='utf-8') as d:
      text_read = d.readlines()
 
 VALID_DOMAINS = text_read[1]
@@ -85,3 +85,9 @@ class AddRecordForm(forms.ModelForm):
 		exclude = ("user",)
 
     
+class RecordNameFilterForm(forms.ModelForm):
+     first_name = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), label="")
+
+     class Meta:
+        model = Record
+        exclude = ("user",)

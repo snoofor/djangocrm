@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
@@ -16,9 +17,49 @@
       th, td {
         padding-left: 1px;
       }
+      .card {
+        margin: 2 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+      }
+      .form { 
+        margin: 5 auto; 
+        width: 250px;
+        text-align: center;
+      }
+      .vertical-center {
+        margin: 2;
+        position: absolute;
+        top: 50%;
+        left: 115%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+      .container {
+        height: 100px;
+        position: relative;
+        border: 1px solid green;
+      } 
     </style>
 </head>
 <body>
+  <div class="container">
+  <div class="col-md-6 offset-md-3">
+  <div class="card" style="width: 48rem;">
+  <form method="GET" action="{% url 'website:home' %}" 
+        style="justify-content:center; display: inline-flex; padding: 0px;">
+    
+    {{ form.as_p }}
+    
+    <div class="vertical-center">
+      <input type="submit" value="Search" class="btn btn-secondary"/>
+    </div>
+  </form>
+  </div>
+  </div>
+  </div>
+  
+  <hr/>
       <table class="table table-striped table-hover table-bordered center" style="width:90%">
         <thead class="table-dark">
           <tr>
@@ -43,8 +84,8 @@
             <td>{{ record.email }}</td>
             <td>{{ record.phone }}</td>
             <!--<td>{{ record.address }}</td>-->
-            <!--<td>{{ record.city }}</td>-->
-            <td>{{ record.state }}</td>
+            <td>{{ record.city }}</td>
+            <!--<td>{{ record.state }}</td>-->
             <!--<td>{{ record.zipcode }}</td>-->
             <!--<td>{{ record.created_at }}</td>-->
             <!--<td><a href="{% url 'website:record' record.id %}">{{ record.id }}</a></td>-->

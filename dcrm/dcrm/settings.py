@@ -14,9 +14,9 @@ from pathlib import Path
 import os
 from django.templatetags.static import static
 
-url = r'C:\Users\furkan\DjangoCRM\dcrm\dcrm\secrets.txt'
+url = r'C:\Users\furkan\DjangoCRM\dcrm\staticfiles\website\secrets.txt'
 
-with open(url, 'r', encoding='utf8') as s:
+with open(url, 'r', encoding='utf-8') as s:
     text_read = s.readlines()
 
 db_uname = text_read[0].split()[2]
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
