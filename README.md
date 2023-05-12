@@ -13,7 +13,7 @@ Login, Logout
 Mysql migration
 
 # Requiremets
-Requirements can be checked in requieremtns.txt 
+Requirements can be checked in requirements.txt 
   beautifulsoup4==4.12.2
   Django==4.1
   django_filter==23.2
